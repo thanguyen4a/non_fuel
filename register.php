@@ -40,12 +40,12 @@ header("Location: http://localhost/non_fuel/confirm.php");
 
 <tr>
 	<td>hobby
-      <input type="checkbox" name="hobby[]" value="1" checked="">Game
-      <input type="checkbox" name="hobby[]" value="2" checked="">Soccer
-      <input type="checkbox" name="hobby[]" value="3" checked="">Music
-      <input type="checkbox" name="hobby[]" value="4" checked="">Swiming
-      <input type="checkbox" name="hobby[]" value="5" checked="">Reading
-      <input type="checkbox" name="hobby[]" value="6" checked="">Other
+      <input type="checkbox" name="hobby[]" value="0">Game
+      <input type="checkbox" name="hobby[]" value="1">Soccer
+      <input type="checkbox" name="hobby[]" value="2">Music
+      <input type="checkbox" name="hobby[]" value="3">Swiming
+      <input type="checkbox" name="hobby[]" value="4">Reading
+      <input type="checkbox" name="hobby[]" value="5">Other
     </td>
 </tr>
 
@@ -57,20 +57,5 @@ header("Location: http://localhost/non_fuel/confirm.php");
 </table>
 
 </form>
-
-
-
-<?php
-if (isset($_POST) && isset($_POST["username"])) {
-	$username = $_POST["username"];
-
-if(is_numeric($username)) {
-    $error = "lỗi username không được phép là số";
-    echo  $error;
-} else {
-	$_SESSION['username'] = $_POST["username"];
-	header("Location: http://localhost/non_fuel/confirm.php"); 
-}
-}
 
 ?>

@@ -42,6 +42,32 @@ function packData($username,$password,$sex,$hobby)
 }
 
 
+function getPrintHobbyStr($hobby_str)
+{
+   $result = "";
+   $hobby =  unserialize($hobby_str);
+   if(!is_array ($hobby)) {
+   		$hobby = array();
+   }
+
+   $numHobbies = count($hobby);
+
+   if($numHobbies > 0) {
+   		$i = 0;
+   		foreach ($hobby as $key => $value) {
+   		 	$result.=convertIntToHobbyString($key);
+   			if(++$i <  $numHobbies) {
+   				$result.=" , ";
+   			}
+   		}
+   }else{
+   		$result = "none";
+   }
+
+   return $result;
+}
+
+
 
 
 ?>
