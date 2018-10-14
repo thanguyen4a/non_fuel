@@ -30,22 +30,15 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `user` (
   `id` int(11) UNSIGNED NOT NULL,
-  `username` varchar(100) NOT NULL
+  `username` varchar(100) NOT NULL,
+  `password` varchar(100) NOT NULL,
+  `sex` int(11) UNSIGNED NOT NULL,
+  `hobby` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Đang đổ dữ liệu cho bảng `user`
 --
-
-INSERT INTO `user` (`id`, `username`) VALUES
-(1, 'aaaa'),
-(2, 'bbbbbbb'),
-(3, 'ccccc'),
-(4, 'aaaaa'),
-(5, 'aaaa'),
-(6, 'aaaa'),
-(7, 'aaaaa');
-
 --
 -- Chỉ mục cho các bảng đã đổ
 --

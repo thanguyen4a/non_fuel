@@ -2,53 +2,44 @@
 session_start();
 ?>
 
-UserName：<?php if (isset($_SESSION) && isset($_SESSION["username"])) {
-echo $_SESSION["username"];?>
+
+<?php 
+   include "common.php";
+
+   $username =  $_SESSION["username"];
+   $password =  $_SESSION["password"];
+   $sex =  $_SESSION["sex"];
+   $hobby_str =  $_SESSION["hobby_str"];
+
+   $hobby =  unserialize($hobby_str);
+   $data = packData($username,$password,$sex,$hobby);
 
 
-<?php
-if(isset($_POST) && isset($_POST["username"])){
 
+   if(!is_array ($hobby)) {
+   		$hobby = array();
+   }
 
-$servername = "localhost";
-$username = "thanguyen";
-$password = "thanguyen";
-$dbname = "fuel";
+   echo "UserName : ". $username . "</br>";
+   echo "Password : ". $password . "</br>";;
+   echo "Sex : ". convertIntToSexString($sex) . "</br>";;
+   echo "Hobby : ";
 
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-} 
+   $numHobbies = count($hobby);
 
-$sql = "INSERT INTO MyGuests (firstname, lastname, email)
-VALUES ('John', 'Doe', 'john@example.com')";
-
-if ($conn->query($sql) === TRUE) {
-    echo "New record created successfully";
-} else {
-    echo "Error: " . $sql . "<br>" . $conn->error;
-}
-
-$conn->close();
+   if($numHobbies > 0) {
+   		$i = 0;
+   		foreach ($hobby as $key => $value) {
+   		 	echo convertIntToHobbyString($key);
+   			if(++$i <  $numHobbies) {
+   				echo " , ";
+   			}
+   		}
+   }else{
+   		echo "none";
+   }
 ?>
-
-
-}
-
-?>
-
-
-
-
-
-
-<form action="confirm.php" method="post">
-UserName：<input type="hidden" name="username" value="<?php if (isset($_SESSION) && isset($_SESSION["username"])) {
-	echo $_SESSION["username"];
-}?>" >
+<form action="success.php" method="post">
+<input type="hidden" name="data" value="<?php echo $data;?>">
 <input type="submit" value="Register">
-<input type="reset" value="Reset">
-</p>
 </form>
