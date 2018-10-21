@@ -12,9 +12,11 @@ if(isset($_POST) && isset($_POST["data"])){
 	$password = $data ["password"];
 	$sex = $data ["sex"];
 	$hobby = $data ["hobby"];
+	$job = $data ["job"];
+	$avatar = $data ["avatar"];
 	$hobby_str = serialize($hobby);
 
-	$result = $connection->insert($username,$password,$sex,$hobby_str);
+	$result = $connection->insert($username,$password,$sex,$hobby_str,$job,$avatar);
 
 
 	if ($result == TRUE) {

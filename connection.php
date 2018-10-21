@@ -7,7 +7,7 @@ private $pass_word = "thanguyen";
 private $dbname = "fuel";
 
 
-public function insert($username,$password,$sex,$hobby_str)
+public function insert($username,$password,$sex,$hobby_str,$job,$avatar)
 {
 	// Create connection
 	$conn = new mysqli($this->servername, $this->user_name, $this->pass_word, $this->dbname);
@@ -16,8 +16,8 @@ public function insert($username,$password,$sex,$hobby_str)
 	    die("Connection failed: " . $conn->connect_error);
 	} 
 
-	$sql = "INSERT INTO user (id,username,password,sex,hobby)
-	VALUES (null,'$username','$password','$sex','$hobby_str')";
+	$sql = "INSERT INTO user (id,username,password,sex,hobby,job,avatar)
+	VALUES (null,'$username','$password','$sex','$hobby_str','$job','$avatar')";
 
 	return $conn->query($sql) ;
 
@@ -61,7 +61,7 @@ public function selectionByID($id)
 }
 
 
-public function update($id,$username,$password,$sex,$hobby_str)
+public function update($id,$username,$password,$sex,$hobby_str,$job,$avatar)
 {
 	// Create connection
 	$conn = new mysqli($this->servername, $this->user_name, $this->pass_word, $this->dbname);
@@ -70,12 +70,27 @@ public function update($id,$username,$password,$sex,$hobby_str)
 	    die("Connection failed: " . $conn->connect_error);
 	} 
 
-	$sql = "UPDATE user SET 
-		username = '$username',
-		password = '$password',
-		sex = '$sex',  
-		hobby = '$hobby_str' 
-		WHERE id = $id";
+	if($avatar != "") {
+
+		$sql = "UPDATE user SET 
+			username = '$username',
+			password = '$password',
+			sex = '$sex',  
+			hobby = '$hobby_str', 
+			job = '$job',  
+			avatar = '$avatar'  
+			WHERE id = $id";
+	} else {
+		$sql = "UPDATE user SET 
+			username = '$username',
+			password = '$password',
+			sex = '$sex',  
+			hobby = '$hobby_str', 
+			job = '$job'
+			WHERE id = $id";
+	}
+
+
 	$result = $conn->query($sql) ;
 	return $result;
 	$conn->close();

@@ -1,5 +1,7 @@
 <?php
 session_start();
+include "common.php";
+$common = new Common();
 ?>
 
 
@@ -9,20 +11,30 @@ if (isset($_POST) && isset($_POST["username"])){
 	$username = $_POST["username"];
 	$password = $_POST["password"];
 	$sex = $_POST["sex"];
-	$hobby = $_POST["hobby"];
+
+	if(isset($_POST["hobby"])) {
+		$hobby = $_POST["hobby"];
+	} else {
+		$hobby = -1;
+	}
+	
 	$hobby_str = serialize($hobby);
+	$common->saveFile($_FILES['up_file']);
+
 
 $_SESSION['username'] = $_POST["username"];
 $_SESSION['password'] = $_POST["password"];
 $_SESSION['sex'] = $_POST["sex"];
 $_SESSION['hobby_str'] = $hobby_str;
+$_SESSION['job'] = $_POST["job"];
+$_SESSION['avatar'] = $_FILES['up_file']['name'];
 header("Location: http://localhost/non_fuel/confirm.php"); 
 }
 
 ?>
 
 
-<form action="register.php" method="post">
+<form action="register.php" method="post" enctype="multipart/form-data">
 
 <table border="0">
 <tr>
@@ -50,6 +62,25 @@ header("Location: http://localhost/non_fuel/confirm.php");
 </tr>
 
 <tr>
+	<td>Job
+     	<select name="job">
+		<option value="1">Engineer</option>
+		<option value="2">Student</option>
+		<option value="3">Pupil</option>
+		<option value="4">Actor</option>
+		</select>
+    </td>
+</tr>
+<tr>
+	<td>Avatar  <input type="file" name="up_file" id="fileToUpload" >
+    </td>
+</tr>
+
+
+
+
+
+<tr>
 <td><input type="submit" value="Register">
 <input type="reset" value="Reset"></td>
 </tr>
@@ -58,4 +89,3 @@ header("Location: http://localhost/non_fuel/confirm.php");
 
 </form>
 
-?>

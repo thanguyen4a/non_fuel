@@ -1,18 +1,23 @@
 <?php
 session_start();
+include "common.php";
+
+$common = new Common();
 ?>
 
 
 <?php 
-   include "common.php";
+   
 
    $username =  $_SESSION["username"];
    $password =  $_SESSION["password"];
    $sex =  $_SESSION["sex"];
    $hobby_str =  $_SESSION["hobby_str"];
+   $job = $_SESSION['job'];
+   $avatar = $_SESSION['avatar'];
 
    $hobby =  unserialize($hobby_str);
-   $data = packData($username,$password,$sex,$hobby);
+   $data = $common->packData($username,$password,$sex,$hobby,$job,$avatar);
 
 
 
@@ -22,22 +27,11 @@ session_start();
 
    echo "UserName : ". $username . "</br>";
    echo "Password : ". $password . "</br>";;
-   echo "Sex : ". convertIntToSexString($sex) . "</br>";;
-   echo "Hobby : ";
-
-   $numHobbies = count($hobby);
-
-   if($numHobbies > 0) {
-   		$i = 0;
-   		foreach ($hobby as $key => $value) {
-   		 	echo convertIntToHobbyString($key);
-   			if(++$i <  $numHobbies) {
-   				echo " , ";
-   			}
-   		}
-   }else{
-   		echo "none";
-   }
+   echo "Sex : ". $common->convertIntToSexString($sex) . "</br>";
+   echo "Hobby : ". $common->getPrintHobbyStr($hobby_str). "</br>";
+   echo "Job : ".$common->convertIntToJobString($job). "</br>";
+   $full_path = $common->getAvatarPath($avatar);
+   echo "Avatar : "; $common->printAvatar($full_path). "</br>";
 ?>
 <form action="success.php" method="post">
 <input type="hidden" name="data" value="<?php echo $data;?>">
