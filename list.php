@@ -1,11 +1,35 @@
 <?php
 include "common.php";
 include "connection.php";
+include "paging.php";
 $connection = new Connection();
 $common = new Common();
-$user_list = $connection->selection();
 
 
+$count = $connection->countUsers();
+
+if(isset($_GET["page"])) {
+	$page = $_GET["page"];
+} else {
+	$page = 1;
+}
+
+
+$paging= new Paging($count,$page);
+
+
+if($paging->page > 1) {
+	$prev_page = $paging->page - 1;
+	echo "<a href='list.php?page=$prev_page'> PrevPage  </a>";
+}
+
+if($paging->page < $paging->max_page) {
+	$next_page = $paging->page + 1;
+	echo "<a href='list.php?page=$next_page'> NextPage  </a>";
+}
+
+
+$user_list = $connection->selectionByPage($paging->start,$paging->hit_per_page);
 
 
 echo '<table border="1">';

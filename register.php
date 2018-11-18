@@ -22,13 +22,17 @@ if (isset($_POST) && isset($_POST["username"])){
 	$common->saveFile($_FILES['up_file']);
 
 
-$_SESSION['username'] = $_POST["username"];
-$_SESSION['password'] = $_POST["password"];
-$_SESSION['sex'] = $_POST["sex"];
-$_SESSION['hobby_str'] = $hobby_str;
-$_SESSION['job'] = $_POST["job"];
-$_SESSION['avatar'] = $_FILES['up_file']['name'];
-header("Location: http://localhost/non_fuel/confirm.php"); 
+// $_SESSION['username'] = $_POST["username"];
+// $_SESSION['password'] = $_POST["password"];
+// $_SESSION['sex'] = $_POST["sex"];
+// $_SESSION['hobby_str'] = $hobby_str;
+$job = $_POST["job"];
+$avatar = $_FILES['up_file']['name'];
+
+
+$params = "?username=$username&password=$password&sex=$sex&job=$job&avatar=$avatar&hobby_str=$hobby_str";
+
+header("Location: http://localhost/non_fuel/confirm.php".$params); 
 }
 
 ?>

@@ -19,9 +19,10 @@ public function insert($username,$password,$sex,$hobby_str,$job,$avatar)
 	$sql = "INSERT INTO user (id,username,password,sex,hobby,job,avatar)
 	VALUES (null,'$username','$password','$sex','$hobby_str','$job','$avatar')";
 
-	return $conn->query($sql) ;
-
+	$data = $conn->query($sql) ;
 	$conn->close();
+	return $data;
+	
 }
 
 
@@ -38,10 +39,20 @@ public function selection()
 
 	$result = $conn->query($sql) ;
 	$data = mysqli_fetch_all($result,MYSQLI_ASSOC);
-	return $data;
 	$conn->close();
+	return $data;
+	
 
 }
+
+public function countUsers()
+{
+	$data = $this->selection();
+	return count($data);
+
+}
+
+
 
 public function selectionByID($id)
 {
@@ -56,8 +67,27 @@ public function selectionByID($id)
 
 	$result = $conn->query($sql) ;
 	$data = mysqli_fetch_all($result,MYSQLI_ASSOC);
-	return $data[0];
 	$conn->close();
+	return $data[0];
+	
+}
+
+public function selectionByPage($offset,$limit)
+{
+
+	// Create connection
+	$conn = new mysqli($this->servername, $this->user_name, $this->pass_word, $this->dbname);
+	// Check connection
+	if ($conn->connect_error) {
+	    die("Connection failed: " . $conn->connect_error);
+	} 
+
+	$sql = "SELECT * FROM user  order by ID LIMIT $offset , $limit ";
+
+	$result = $conn->query($sql) ;
+	$data = mysqli_fetch_all($result,MYSQLI_ASSOC);
+	$conn->close();
+	return $data;
 }
 
 
@@ -92,8 +122,9 @@ public function update($id,$username,$password,$sex,$hobby_str,$job,$avatar)
 
 
 	$result = $conn->query($sql) ;
-	return $result;
 	$conn->close();
+	return $result;
+	
 }
 
 
