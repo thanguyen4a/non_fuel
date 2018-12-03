@@ -117,7 +117,7 @@ public function checkExitHobby($hobby,$str_hobby)
 }
 
 
-public function saveFile($file)
+public function saveTmpFile($file)
 {
 
 	if(is_uploaded_file($file['tmp_name'])){

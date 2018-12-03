@@ -2,8 +2,8 @@
 class Connection {
 
 private $servername = "localhost";
-private $user_name = "thanguyen";
-private $pass_word = "thanguyen";
+private $user_name = "root";
+private $pass_word = "";
 private $dbname = "fuel";
 
 
