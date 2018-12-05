@@ -2,8 +2,10 @@
 session_start();
 include "common.php";
 include "connection.php";
+include "validation.php";
 $common = new Common();
 $connection = new Connection();
+
 ?>
 
 
@@ -12,6 +14,14 @@ $connection = new Connection();
 if (isset($_POST) && (isset($_POST["input"]) || isset($_POST["confirm"]))){
 
    	if(isset($_POST["input"])) {
+
+   		
+   		$data = array_merge($_POST,$_FILES);
+   		$validation = new Validation($data);
+
+   		$errors = $validation->run();
+
+
 
    		$username = $_POST["username"];
 		$password = $_POST["password"];
@@ -29,6 +39,18 @@ if (isset($_POST) && (isset($_POST["input"]) || isset($_POST["confirm"]))){
 		$job = $_POST["job"];
 		$avatar = $_FILES['up_file']['name'];
 		$data = $common->packData($username,$password,$sex,$hobby,$job,$avatar);
+
+		
+		//validate
+		$error = array();
+		if(strlen($password) < 6) {
+			$error[] = "password phải lớn hơn hoặc bằng 6 kí tự";
+		}
+
+		if(count($error)>0) 
+		{
+			include("template/input.php"); 
+		} else 
 		include("template/confirm.php"); 
    }
 
@@ -45,6 +67,7 @@ if (isset($_POST) && (isset($_POST["input"]) || isset($_POST["confirm"]))){
 		$result = $connection->insert($username,$password,$sex,$hobby_str,$job,$avatar);
    		include("template/complete.php"); 
    }
+
 
   //  if (isset($_POST["back"])){
   //  		$data = base64_decode($_POST["data"]);
