@@ -11,7 +11,7 @@ $connection = new Connection();
 
 <?php 
 
-if (isset($_POST) && (isset($_POST["input"]) || isset($_POST["confirm"]))){
+if (isset($_POST) && (isset($_POST["input"]) || isset($_POST["confirm"]) || isset($_POST["back"]))){
 
    	if(isset($_POST["input"])) {
 
@@ -20,7 +20,6 @@ if (isset($_POST) && (isset($_POST["input"]) || isset($_POST["confirm"]))){
    		$validation = new Validation($data);
 
    		$errors = $validation->run();
-
 
 
    		$username = $_POST["username"];
@@ -32,26 +31,27 @@ if (isset($_POST) && (isset($_POST["input"]) || isset($_POST["confirm"]))){
 		} else {
 			$hobby = -1;
 		}
+
+
 	
 		$hobby_str = serialize($hobby);
-		$common->saveTmpFile($_FILES['up_file']);
+		$avatar = "";
+		if(isset($_FILES['up_file'])) {
+			$common->saveTmpFile($_FILES['up_file']);
+			$avatar = $_FILES['up_file']['name'];
+		}
+		
 
 		$job = $_POST["job"];
-		$avatar = $_FILES['up_file']['name'];
+		
 		$data = $common->packData($username,$password,$sex,$hobby,$job,$avatar);
 
-		
-		//validate
-		$error = array();
-		if(strlen($password) < 6) {
-			$error[] = "password phải lớn hơn hoặc bằng 6 kí tự";
-		}
-
-		if(count($error)>0) 
+		if(count($errors)>0) 
 		{
 			include("template/input.php"); 
-		} else 
-		include("template/confirm.php"); 
+		} else {
+			include("template/confirm.php"); 
+		}
    }
 
    if (isset($_POST["confirm"])){
@@ -64,28 +64,24 @@ if (isset($_POST) && (isset($_POST["input"]) || isset($_POST["confirm"]))){
 		$job = $data ["job"];
 		$avatar = $data ["avatar"];
 		$hobby_str = serialize($hobby);
-		$result = $connection->insert($username,$password,$sex,$hobby_str,$job,$avatar);
+		$result = $connection->insert($username,$password,$sex,$hobby_str,$job,$avaatr);
    		include("template/complete.php"); 
    }
 
 
-  //  if (isset($_POST["back"])){
-  //  		$data = base64_decode($_POST["data"]);
-		// $data = unserialize($data);
+   if (isset($_POST["back"])){
+   		$data = base64_decode($_POST["data"]);
+		$data = unserialize($data);
 
-
-		// $username = $data ["username"];
-		// $password = $data ["password"];
-		// $sex = $data ["sex"];
-		// $hobby = $data ["hobby"];
-		// $job = $data ["job"];
-		// $avatar = $data ["avatar"];
-		// $hobby_str = serialize($hobby);
-
-		// $result = $connection->insert($username,$password,$sex,$hobby_str,$job,$avatar);
-
-  //  		include("template/input.php"); 
-  //  }
+		$username = $data ["username"];
+		$password = $data ["password"];
+		$sex = $data ["sex"];
+		$hobby = $data ["hobby"];
+		$job = $data ["job"];
+		$avatar = "";
+		$hobby_str = serialize($hobby);
+   		include("template/input.php"); 
+   }
 
 
 } else {

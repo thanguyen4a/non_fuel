@@ -101,19 +101,19 @@ public function getPrintHobbyStr($hobby_str)
 
 public function checkExitHobby($hobby,$str_hobby) 
 {	
-	$numHobbies = count($hobby);
-	if($numHobbies <= 0) {
-		return false;
-	}
+
+  if(!is_array($hobby)) {
+      return ($hobby == $str_hobby);
+  }
 
 	foreach ($hobby as $key => $value) {
    		 	
 			if($value == $str_hobby) {
-				return true;
+				  return true;
 			}
-   	}
+  }
 
-   	return false;
+  return false;
 }
 
 
@@ -126,18 +126,17 @@ public function saveTmpFile($file)
         if(move_uploaded_file($file['tmp_name'],"img/".$file['name'])){
 
             //正常
-            echo "uploaded";
+            // echo "uploaded";
 
         }else{
 
             //コピーに失敗（だいたい、ディレクトリがないか、パーミッションエラー）
-            echo "error while saving.";
+            // echo "error while saving.";
         }
 
     }else{
-
         //そもそもファイルが来ていない。
-        echo "file not uploaded.";
+        // echo "file not uploaded.";
 
     }
 }

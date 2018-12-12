@@ -33,49 +33,63 @@ class Validation {
 
       private function validateUserName()
       {
-          if(!preg_match('/^\w{5,}$/', $data['username']) || strlen($data['username']) > 10) 
+          if(strlen($this->data['username']) > 10) 
           {
-              $errors['username'] = INVALID_USERNAME;
+              $this->errors['username'] = self::INVALID_USERNAME;
           }
       }
 
       private function validatePassword()
       {
-          if(!preg_match('/^\w{5,}$/', $data['password']) || strlen($data['password']) > 10) 
+          if(strlen($this->data['password']) > 10) 
           {
-              $errors['password']= INVALID_PASSWORD;
+              $this->errors['password']= self::INVALID_PASSWORD;
           }
       }
 
       private function validateSex()
       {
-          if(!in_array($data['sex'], array(1,2))) 
+          if(!in_array($this->data['sex'], array(1,2))) 
           {
-              $errors['sex']= INVALID_SEX;
+              $this->errors['sex']= self::INVALID_SEX;
           }
       }
 
       private function validateHobby()
       {
-          if(in_array($data['hobby'], array(1,2) ) 
-          {
-              $errors['hobby']= INVALID_HOBBY;
+          if(isset($this->data['hobby'])){
+
+              if(is_array($this->data['hobby']) ) {
+
+                foreach ($this->data['hobby'] as $hobby) {
+                      if(!in_array($hobby, array(0,1,2,3,4,5))) {
+                          $this->errors['hobby'] = self::INVALID_HOBBY;
+                          return;
+
+                    }
+                }
+
+                
+              } else if($this->data['hobby'] != -1) {
+                  $this->errors['hobby']= self::INVALID_HOBBY;
+                  return;
+              }
           }
       }
 
       private function validateJob()
       {
-          if($data['job'] > 4 || $data['job'] < 1 ) 
+          if($this->data['job'] > 4 || $this->data['job'] < 1 ) 
           {
-              $errors['job']= INVALID_JOB;
+              $this->errors['job']= self::INVALID_JOB;
           }
       }
 
       private function validateAvatar()
       {
-          if($data['upfile']['size'] > 10000) 
+          if(isset($this->data['upfile']) && $this->data['upfile']['size'] > 10000) 
           {
-              $errors['avatar']= INVALID_FILE;
+              $this->errors['avatar']= self::INVALID_FILE;
           }
       }
 

@@ -70,7 +70,7 @@ if (isset($_POST) && isset($_POST["id"])){
 		?>
 	</td>
 <tr>
-<!-- <?php var_dump($hobby); ?> -->
+
 <tr>
 	<td>hobby
       <input type="checkbox" name="hobby[]" value="0" <?php if ($common->checkExitHobby($hobby,"0")) echo 'checked'; ?>>Game

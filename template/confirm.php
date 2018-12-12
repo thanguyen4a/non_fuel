@@ -4,8 +4,15 @@
    echo "Sex : ". $common->convertIntToSexString($sex) . "</br>";
    echo "Hobby : ". $common->getPrintHobbyStr($hobby_str). "</br>";
    echo "Job : ".$common->convertIntToJobString($job). "</br>";
-   $full_path = $common->getAvatarPath($avatar);
-   echo "Avatar : "; $common->printAvatar($full_path). "</br>";
+   
+   if($avatar != "") {
+   		$full_path = $common->getAvatarPath($avatar);
+   		echo "Avatar : ";
+   	    echo $common->printAvatar($full_path). "</br>";
+   } else {
+   		echo "Avatar : File not Uploaded</br>";
+   }
+  
 ?>
 <form action="register.php" method="post">
 <input type="hidden" name="data" value="<?php echo $data;?>">
