@@ -5,12 +5,11 @@
    echo "Hobby : ". $common->getPrintHobbyStr($hobby_str). "</br>";
    echo "Job : ".$common->convertIntToJobString($job). "</br>";
    
-   if($avatar != "") {
-   		$full_path = $common->getAvatarPath($avatar);
-   		echo "Avatar : ";
-   	    echo $common->printAvatar($full_path). "</br>";
+   if($file['tmp_name'] != "") {
+   	  echo "Avatar : ";
+   	  echo $common->printAvatar($file['tmp_name']). "</br>";
    } else {
-   		echo "Avatar : File not Uploaded</br>";
+   	  echo "Avatar : File not Uploaded</br>";
    }
   
 ?>

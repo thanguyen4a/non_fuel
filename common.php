@@ -56,7 +56,7 @@ public function printAvatar ($full_path)
 }
 
 
-public function packData($username,$password,$sex,$hobby,$job,$avatar)
+public function packData($username,$password,$sex,$hobby,$job,$file)
 {
 	$data = array();
 	$data["username"] = $username;
@@ -64,7 +64,7 @@ public function packData($username,$password,$sex,$hobby,$job,$avatar)
 	$data["password"] = $password;
 	$data["hobby"] = $hobby;
 	$data["job"] = $job;
-	$data["avatar"] = $avatar;
+	$data["file"] = $file;
 	
 	$data = serialize($data);
 	$data = base64_encode($data);
@@ -121,7 +121,6 @@ public function saveTmpFile($file)
 {
 
 	if(is_uploaded_file($file['tmp_name'])){
-
         //一字ファイルを保存ファイルにコピーできたか
         if(move_uploaded_file($file['tmp_name'],"img/".$file['name'])){
 

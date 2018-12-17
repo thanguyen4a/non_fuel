@@ -35,16 +35,15 @@ if (isset($_POST) && (isset($_POST["input"]) || isset($_POST["confirm"]) || isse
 
 	
 		$hobby_str = serialize($hobby);
-		$avatar = "";
+		$file = "";
 		if(isset($_FILES['up_file'])) {
-			$common->saveTmpFile($_FILES['up_file']);
-			$avatar = $_FILES['up_file']['name'];
+			$file = $_FILES['up_file'];
 		}
 		
 
 		$job = $_POST["job"];
 		
-		$data = $common->packData($username,$password,$sex,$hobby,$job,$avatar);
+		$data = $common->packData($username,$password,$sex,$hobby,$job,$file);
 
 		if(count($errors)>0) 
 		{
@@ -62,9 +61,10 @@ if (isset($_POST) && (isset($_POST["input"]) || isset($_POST["confirm"]) || isse
 		$sex = $data ["sex"];
 		$hobby = $data ["hobby"];
 		$job = $data ["job"];
-		$avatar = $data ["avatar"];
+		$file = $data ["file"];
 		$hobby_str = serialize($hobby);
-		$result = $connection->insert($username,$password,$sex,$hobby_str,$job,$avaatr);
+		$common->saveTmpFile($file);
+		$result = $connection->insert($username,$password,$sex,$hobby_str,$job,$avatar);
    		include("template/complete.php"); 
    }
 
