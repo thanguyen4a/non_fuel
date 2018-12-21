@@ -9,27 +9,19 @@ $common = new Common();
 $count = $connection->countUsers();
 
 if(isset($_GET["page"])) {
-	$page = $_GET["page"];
+	$cur_page = $_GET["page"];
 } else {
-	$page = 1;
+	$cur_page = 1;
 }
 
 
-$paging= new Paging($count,$page);
-
-
-if($paging->page > 1) {
-	$prev_page = $paging->page - 1;
-	echo "<a href='list.php?page=$prev_page'> PrevPage  </a>";
-}
-
-if($paging->page < $paging->max_page) {
-	$next_page = $paging->page + 1;
-	echo "<a href='list.php?page=$next_page'> NextPage  </a>";
-}
-
-
+$paging= new Paging($count,$cur_page);
 $user_list = $connection->selectionByPage($paging->start,$paging->hit_per_page);
+
+
+echo $paging->link_html;
+
+
 
 
 echo '<table border="1">';

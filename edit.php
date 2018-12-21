@@ -108,8 +108,6 @@ if (isset($_POST) && isset($_POST["id"])){
 
 
 
-
-
 <tr>
 <td><input type="submit" value="Edit">
 <input type="reset" value="Reset"></td>

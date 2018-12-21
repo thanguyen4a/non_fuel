@@ -9,7 +9,7 @@
    	  echo "Avatar : ";
    	  echo $common->printAvatar($file['tmp_name']). "</br>";
    } else {
-   	  echo "Avatar : File not Uploaded</br>";
+   	  echo "Avatar</br>";
    }
   
 ?>
